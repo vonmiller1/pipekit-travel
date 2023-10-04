@@ -1,0 +1,579 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Custom Blush & Lavender Palette Tokens */
+  --color-blush-canvas: #FFF4F6;
+  --color-blush-surface: #FCE4E8;
+  --color-blush-rose: #F5BEC6;
+  --color-blush-purple: #C3B1E1;
+  --color-blush-purple-dark: #8B6FBD;
+  --color-blush-plum: #241830;
+  --color-blush-muted: #665578;
+  
+  --color-manager: #E06D83;
+  --color-report: #8B6FBD;
+  --color-semantic-success: #10b981;
+  --color-semantic-warning: #f59e0b;
+  --color-semantic-error: #e11d48;
+}
+
+:root {
+  --background: #FFF4F6;
+  --foreground: #241830;
+  --card: #FFFFFF;
+  --card-foreground: #241830;
+  --popover: #FFFFFF;
+  --popover-foreground: #241830;
+  --primary: #8B6FBD;
+  --primary-foreground: #FFFFFF;
+  --secondary: #FCE4E8;
+  --secondary-foreground: #241830;
+  --muted: #F8E8EC;
+  --muted-foreground: #665578;
+  --accent: #C3B1E1;
+  --accent-foreground: #241830;
+  --destructive: #e11d48;
+  --border: #F5BEC6;
+  --input: #FFF4F6;
+  --ring: #8B6FBD;
+  --radius: 1.25rem;
+
+  /* Uiverse token system mappings */
+  --bg: #F3F5F8;
+  --bg-dark: #14181F;
+  --surface: #FFFFFF;
+  --ink: #1C2333;
+  --ink-soft: #5B6478;
+  --paper: #F3F5F8;
+  --manager: #C97F2A;
+  --manager-soft: #F3E3CE;
+  --report: #2A8C82;
+  --report-soft: #DCEEEC;
+  --alert: #D64545;
+}
+
+.dark {
+  --background: #171020;
+  --foreground: #FDF4F6;
+  --card: #22182E;
+  --card-foreground: #FDF4F6;
+  --popover: #22182E;
+  --popover-foreground: #FDF4F6;
+  --primary: #C3B1E1;
+  --primary-foreground: #171020;
+  --secondary: #2F2040;
+  --secondary-foreground: #FDF4F6;
+  --muted: #2F2040;
+  --muted-foreground: #B5A4C7;
+  --accent: #8B6FBD;
+  --accent-foreground: #FFFFFF;
+  --destructive: #fb7185;
+  --border: rgba(195, 177, 225, 0.25);
+  --input: #171020;
+  --ring: #C3B1E1;
+}
+
+@layer base {
+  * {
+    border-color: rgba(245, 190, 198, 0.4);
+  }
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #FFF4F6;
+    background-image: 
+      radial-gradient(at 10% 10%, rgba(195, 177, 225, 0.35) 0px, transparent 60%),
+      radial-gradient(at 90% 10%, rgba(252, 228, 232, 0.8) 0px, transparent 50%),
+      radial-gradient(at 50% 90%, rgba(245, 190, 198, 0.25) 0px, transparent 60%);
+    background-attachment: fixed;
+    color: #241830;
+    font-size: 15px;
+    line-height: 1.5;
+    letter-spacing: -0.011em;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ============================================================
+   Senior Frontend Design System Components (Blush & Lavender)
+   ============================================================ */
+
+/* Global Top Navigation Bar */
+.apple-global-nav {
+  background: linear-gradient(90deg, #241830 0%, #191022 100%);
+  border-bottom: 1px solid rgba(195, 177, 225, 0.2);
+  color: #FFF4F6;
+  height: 44px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Sub-Nav Frosted Glass Header */
+.apple-sub-nav {
+  background-color: rgba(255, 244, 246, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(245, 190, 198, 0.5);
+  height: 68px;
+}
+
+/* Hero Canvas & Product Tiles */
+.apple-hero-tile {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FCE4E8 50%, #F8E4EC 100%);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px -15px rgba(139, 111, 189, 0.15), 0 0 1px rgba(245, 190, 198, 0.8) inset;
+  border: 1px solid #F5BEC6;
+}
+
+.apple-tile-dark {
+  background-color: #241830;
+  color: #FFF4F6;
+  border-radius: 24px;
+  border: 1px solid rgba(195, 177, 225, 0.25);
+}
+
+/* Vibrant Primary CTA Button with Scale & Glow */
+.apple-btn-primary {
+  background: linear-gradient(135deg, #8B6FBD 0%, #6E539F 100%);
+  color: #FFFFFF;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 9999px;
+  border: none;
+  box-shadow: 0 4px 16px rgba(139, 111, 189, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.apple-btn-primary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transition: all 0.6s ease;
+}
+
+.apple-btn-primary:hover::after {
+  left: 100%;
+}
+
+.apple-btn-primary:hover {
+  background: linear-gradient(135deg, #9C82C7 0%, #7D61B0 100%);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(139, 111, 189, 0.45);
+}
+
+.apple-btn-primary:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Secondary Translucent Border CTA */
+.apple-btn-secondary {
+  background-color: rgba(252, 228, 232, 0.6);
+  color: #8B6FBD;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  border: 1px solid #F5BEC6;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.apple-btn-secondary:hover {
+  background-color: #FCE4E8;
+  border-color: #8B6FBD;
+  color: #6E539F;
+  transform: translateY(-1px) scale(1.02);
+}
+
+.apple-btn-secondary:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Compact Dark Utility Button */
+.apple-btn-utility {
+  background-color: #241830;
+  color: #FFF4F6;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(195, 177, 225, 0.3);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.apple-btn-utility:hover {
+  background-color: #322342;
+  border-color: #C3B1E1;
+  transform: translateY(-1px);
+}
+
+.apple-btn-utility:active {
+  transform: translateY(0) scale(0.95);
+}
+
+/* Premium Card */
+.apple-card {
+  background: #FFFFFF;
+  color: #241830;
+  border-radius: 24px;
+  padding: 24px;
+  border: 1px solid rgba(245, 190, 198, 0.6);
+  box-shadow: 0 10px 30px -10px rgba(139, 111, 189, 0.08), 0 2px 6px rgba(36, 24, 48, 0.02);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-card:hover {
+  transform: translateY(-3px);
+  border-color: #C3B1E1;
+  box-shadow: 0 16px 36px -12px rgba(139, 111, 189, 0.18), 0 0 20px rgba(195, 177, 225, 0.2);
+}
+
+/* Waveform Visualizer Bar */
+.balance-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 64px;
+}
+
+.balance-bar {
+  flex: 1;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+}
+
+/* Search Input & Configurator Chips */
+.apple-search-input {
+  background-color: #FFF4F6;
+  color: #241830;
+  border-radius: 9999px;
+  padding: 12px 20px;
+  border: 1px solid #F5BEC6;
+  font-size: 14px;
+  height: 44px;
+  transition: all 0.2s ease;
+}
+
+.apple-search-input:focus {
+  outline: none;
+  border-color: #8B6FBD;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(139, 111, 189, 0.2);
+}
+
+/* Monospace transcript textarea */
+.transcript-textarea {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13.5px;
+  line-height: 1.6;
+  resize: vertical;
+  background-color: #FFF4F6;
+  color: #241830;
+  border-radius: 18px;
+  border: 1px solid #F5BEC6;
+  transition: all 0.2s ease;
+}
+
+.transcript-textarea:focus {
+  outline: none;
+  border-color: #8B6FBD;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(139, 111, 189, 0.2);
+}
+
+.transcript-textarea::placeholder {
+  color: #8E7E9E;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 111, 189, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 111, 189, 0.6);
+}
+
+/* ============================================================
+   Feature 2: Overdue Action Item Animation
+   ============================================================ */
+@keyframes overdue-pulse {
+  0%, 100% { border-left-color: #E06D83; opacity: 1; }
+  50% { border-left-color: #CC3355; opacity: 0.7; }
+}
+
+.overdue-item {
+  animation: overdue-pulse 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   Uiverse.io Reskinned Atomic Components
+   ============================================================ */
+
+/* 1. Toggle Switch */
+.uiverse-switch {
+  font-size: 16px;
+  position: relative;
+  display: inline-block;
+  width: 3.2em;
+  height: 1.8em;
+}
+
+.uiverse-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.uiverse-switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--border);
+  transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 30px;
+}
+
+.uiverse-switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 1.3em;
+  width: 1.3em;
+  left: 0.25em;
+  bottom: 0.25em;
+  background-color: var(--ink-soft);
+  transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 50%;
+}
+
+.uiverse-switch input:checked + .uiverse-switch-slider {
+  background-color: var(--manager);
+}
+
+.uiverse-switch input:checked + .uiverse-switch-slider:before {
+  transform: translateX(1.4em);
+  background-color: var(--surface);
+}
+
+/* 2. CSS Loader */
+.uiverse-loader {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.uiverse-loader-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--report);
+  animation: uiverse-dot-pulse 1.2s infinite ease-in-out;
+}
+
+.uiverse-loader-dot:nth-child(2) {
+  animation-delay: 0.2s;
+  background-color: var(--manager);
+}
+
+.uiverse-loader-dot:nth-child(3) {
+  animation-delay: 0.4s;
+  background-color: var(--report);
+}
+
+@keyframes uiverse-dot-pulse {
+  0%, 100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+/* 3. Checkbox Component */
+.uiverse-checkbox-container {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.uiverse-checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.uiverse-checkmark {
+  position: relative;
+  display: inline-block;
+  height: 17px;
+  width: 17px;
+  background-color: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 5px;
+  transition: all 0.2s ease;
+}
+
+.uiverse-checkbox-container:hover input ~ .uiverse-checkmark {
+  border-color: var(--report);
+}
+
+.uiverse-checkbox-container input:checked ~ .uiverse-checkmark {
+  background-color: var(--report);
+  border-color: var(--report);
+}
+
+.uiverse-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 5px;
+  top: 1.5px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--surface);
+  border-width: 0 2.2px 2.2px 0;
+  transform: rotate(45deg);
+}
+
+.uiverse-checkbox-container input:checked ~ .uiverse-checkmark:after {
+  display: block;
+}
+
+/* 4. CSS Tooltip */
+.uiverse-tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.uiverse-tooltip {
+  visibility: hidden;
+  position: absolute;
+  z-index: 50;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background-color: var(--surface);
+  color: var(--ink);
+  border: 1.5px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(28, 35, 51, 0.06);
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.uiverse-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--border) transparent transparent transparent;
+}
+
+.uiverse-tooltip-container:hover .uiverse-tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* 5. Card Hover Lift */
+.uiverse-card-lift {
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.uiverse-card-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 60px -30px rgba(28, 35, 51, 0.25);
+}
+
+/* 6. Button Sweep Interaction */
+.uiverse-btn-sweep {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.uiverse-btn-sweep::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transition: all 0.6s ease;
+}
+
+.uiverse-btn-sweep:hover::after {
+  left: 100%;
+}
+
+/* Motion Reduced Overrides */
+@media (prefers-reduced-motion: reduce) {
+  .uiverse-switch-slider,
+  .uiverse-switch-slider:before,
+  .uiverse-loader-dot,
+  .uiverse-checkmark,
+  .uiverse-tooltip,
+  .uiverse-card-lift,
+  .uiverse-btn-sweep::after {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}

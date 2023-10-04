@@ -1,0 +1,125 @@
+// ============================================================
+// 1:1 Balance — Prisma Schema (v2: speaker fields, staleness, workspace uniqueness)
+// ============================================================
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id               String           @id @default(uuid())
+  email            String           @unique
+  name             String?
+  defaultThreshold Float            @default(60)
+  createdAt        DateTime         @default(now())
+  reports          Report[]
+  sessions         Session[]
+  projects         Project[]
+  settings         ManagerSettings?
+}
+
+model Project {
+  id          String    @id @default(uuid())
+  managerId   String
+  name        String
+  description String?
+  color       String    @default("#8B6FBD")
+  createdAt   DateTime  @default(now())
+
+  manager     User      @relation(fields: [managerId], references: [id])
+  sessions    Session[]
+
+  // Bug 1.5 fix: unique project names per manager
+  @@unique([managerId, name])
+  @@index([managerId])
+}
+
+model Report {
+  id          String    @id @default(uuid())
+  managerId   String
+  displayName String
+  createdAt   DateTime  @default(now())
+  manager     User      @relation(fields: [managerId], references: [id])
+  sessions    Session[]
+
+  @@index([managerId])
+}
+
+model Session {
+  id                String          @id @default(uuid())
+  managerId         String
+  reportId          String
+  projectId         String?
+  // Bug 1.4 fix: occurredAt is the authoritative date field
+  occurredAt        DateTime
+  label             String?
+  notes             String?         // Feature 3: session notes / agenda
+  rawTranscriptRef  String
+  status            String          @default("queued") // queued | processed | failed
+  createdAt         DateTime        @default(now())
+
+  manager           User            @relation(fields: [managerId], references: [id])
+  report            Report          @relation(fields: [reportId], references: [id])
+  project           Project?        @relation(fields: [projectId], references: [id])
+  metrics           SessionMetrics?
+  actionItems       ActionItem[]
+
+  @@index([managerId])
+  @@index([reportId])
+  @@index([projectId])
+  @@index([status])
+  @@index([occurredAt])
+}
+
+model SessionMetrics {
+  sessionId              String   @id
+  managerTalkPct         Float
+  reportTalkPct          Float
+  managerQuestions       Int
+  reportQuestions        Int
+  managerInitiatedTopics Int
+  reportInitiatedTopics  Int
+  flagged                Boolean  @default(false)
+  flagReason             String?
+  summary                String?
+
+  session                Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+model ActionItem {
+  id              String    @id @default(uuid())
+  sessionId       String
+  // Bug 1.1 fix: separate speaker_name and speaker_role fields
+  owner           String    // manager | report  (kept for backward compat)
+  speakerName     String    @default("")   // actual name from transcript
+  speakerRole     String    @default("report") // "manager" | "report" — resolved from form mapping
+  text            String
+  dueHint         String?
+  dueDate         DateTime? // resolved absolute date from due_hint
+  status          String    @default("open") // open | done | carried_over | dropped
+  staleSessionCount Int     @default(0)  // increments each subsequent open session
+  staleSince      DateTime? // set when staleSessionCount >= 2
+  flaggedInaccurate Boolean   @default(false)
+  flaggedReason     String?
+  flaggedAt         DateTime?
+  createdAt       DateTime  @default(now())
+
+  session         Session   @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@index([status])
+  @@index([speakerRole])
+}
+
+model ManagerSettings {
+  managerId        String @id
+  talkPctThreshold Float  @default(60)
+  retentionDays    Int    @default(180)
+
+  manager          User   @relation(fields: [managerId], references: [id])
+}
